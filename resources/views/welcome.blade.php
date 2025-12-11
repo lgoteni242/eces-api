@@ -141,7 +141,7 @@
                 </div>
                 <div class="space-y-0.5">
                     @php
-                        $projects = [
+                        $projectNames = [
                             'Groupe 1 - E-commerce',
                             'Groupe 2 - Scolaire',
                             'Groupe 3 - Réservation',
@@ -154,11 +154,11 @@
                             'Groupe 10 - RH',
                         ];
                     @endphp
-                    @foreach ($projects as $index => $project)
-                        <a href="#groupe-{{ $index + 1 }}"
+                    @foreach ($projectNames as $index => $projectName)
+                        <a href="/projet/{{ $index + 1 }}"
                             class="block px-6 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white brutal-hover truncate">
                             <span class="font-mono text-xs text-gray-400 mr-2">{{ sprintf('%02d', $index + 1) }}</span>
-                            {{ $project }}
+                            {{ $projectName }}
                         </a>
                     @endforeach
                 </div>
@@ -201,7 +201,11 @@
                     <span class="text-black dark:text-white font-medium">API Rest V1.0</span>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="#" class="text-sm font-mono hover:underline">github.com/eces/api</a>
+                    <a href="https://github.com/lgoteni242/eces-api" target="_blank" rel="noopener noreferrer"
+                        class="text-sm font-mono hover:underline flex items-center gap-2">
+                        <i class="fab fa-github"></i>
+                        github.com/lgoteni242/eces-api
+                    </a>
                     <div class="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
                     <span
                         class="text-xs bg-black text-white dark:bg-white dark:text-black px-2 py-1 font-mono">DEV</span>
@@ -332,71 +336,96 @@
                     <span class="font-mono text-xs text-gray-500">10 ENTRÉES</span>
                 </div>
 
-                <div class="border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0a0a0a]">
-                    <div
-                        class="grid grid-cols-12 gap-0 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#111] text-xs font-mono uppercase text-gray-500 py-3 px-4">
-                        <div class="col-span-1">ID</div>
-                        <div class="col-span-4">Nom du Projet</div>
-                        <div class="col-span-5">Description</div>
-                        <div class="col-span-2 text-right">Route</div>
-                    </div>
-
-                    @php
-                        $projectsDetails = [
-                            [
-                                'id' => '01',
-                                'name' => 'E-commerce',
-                                'desc' => 'Plateforme de vente avec panier et commandes',
-                            ],
-                            [
-                                'id' => '02',
-                                'name' => 'Gestion Scolaire',
-                                'desc' => 'Suivi des notes, matières et étudiants',
-                            ],
-                            [
-                                'id' => '03',
-                                'name' => 'Réservation Salles',
-                                'desc' => 'Calendrier de réservation de ressources',
-                            ],
-                            [
-                                'id' => '04',
-                                'name' => 'Réseau Social',
-                                'desc' => 'Feed d\'actualité, posts et commentaires',
-                            ],
-                            [
-                                'id' => '05',
-                                'name' => 'Gestion Tâches',
-                                'desc' => 'Tableau Kanban et assignation de tâches',
-                            ],
-                            ['id' => '06', 'name' => 'E-Learning', 'desc' => 'Catalogue de cours et progression'],
-                            ['id' => '07', 'name' => 'Budget Perso', 'desc' => 'Suivi des dépenses et graphiques'],
-                            [
-                                'id' => '08',
-                                'name' => 'Avis Restaurants',
-                                'desc' => 'Notation et commentaires d\'établissements',
-                            ],
-                            [
-                                'id' => '09',
-                                'name' => 'Événementiel',
-                                'desc' => 'Billetterie et gestion de participants',
-                            ],
-                            ['id' => '10', 'name' => 'Portail RH', 'desc' => 'Annuaire employés et congés'],
-                        ];
-                    @endphp
-
-                    @foreach ($projectsDetails as $p)
-                        <div
-                            class="grid grid-cols-12 gap-0 py-4 px-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#111] transition-colors group">
-                            <div class="col-span-1 font-mono text-sm text-gray-400">{{ $p['id'] }}</div>
-                            <div class="col-span-4 font-medium">{{ $p['name'] }}</div>
-                            <div class="col-span-5 text-sm text-gray-500">{{ $p['desc'] }}</div>
-                            <div class="col-span-2 text-right">
+                <!-- Projects Details -->
+                @if (isset($projects) && is_array($projects))
+                    @foreach ($projects as $project)
+                        <div id="groupe-{{ $project['id'] }}"
+                            class="mb-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0a0a0a]">
+                            <!-- Project Header -->
+                            <div
+                                class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 bg-gray-50 dark:bg-[#111] flex justify-between items-center">
+                                <div class="flex items-center gap-4">
+                                    <span class="font-mono text-sm text-gray-500">GROUPE
+                                        {{ sprintf('%02d', $project['id']) }}</span>
+                                    <div class="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
+                                    <h3 class="text-lg font-bold">{{ $project['fullName'] }}</h3>
+                                </div>
                                 <code
-                                    class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors">/api/g-{{ intval($p['id']) }}</code>
+                                    class="text-xs bg-black dark:bg-white text-white dark:text-black px-3 py-1 font-mono">
+                                    /api/groupe-{{ $project['id'] }}
+                                </code>
+                            </div>
+
+                            <div class="p-6">
+                                <!-- Description -->
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                                    {{ $project['description'] }}
+                                </p>
+
+                                <!-- Technologies -->
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    @foreach ($project['tech'] as $tech)
+                                        <div
+                                            class="border border-gray-200 dark:border-gray-800 px-3 py-1 text-xs font-mono">
+                                            {{ $tech }}
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Features Grid -->
+                                <div class="mb-6">
+                                    <h4 class="text-xs font-mono uppercase text-gray-500 mb-3">Fonctionnalités</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        @foreach ($project['features'] as $feature)
+                                            <div
+                                                class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                                                <span class="text-gray-400 mt-0.5">•</span>
+                                                <span>{{ $feature }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <!-- Endpoints -->
+                                <div>
+                                    <h4 class="text-xs font-mono uppercase text-gray-500 mb-3">Endpoints Principaux
+                                    </h4>
+                                    <div class="space-y-2">
+                                        @foreach (array_slice($project['endpoints'], 0, 4) as $endpoint)
+                                            <div
+                                                class="flex items-center gap-3 p-2 bg-gray-50 dark:bg-[#111] border border-gray-200 dark:border-gray-800">
+                                                <span
+                                                    class="text-xs font-mono font-bold min-w-[50px] text-center
+                                                @if ($endpoint['method'] === 'GET') text-blue-600
+                                                @elseif($endpoint['method'] === 'POST') text-green-600
+                                                @elseif($endpoint['method'] === 'PUT') text-yellow-600
+                                                @else text-red-600 @endif">
+                                                    {{ $endpoint['method'] }}
+                                                </span>
+                                                <code class="text-xs font-mono flex-1">{{ $endpoint['path'] }}</code>
+                                                <span
+                                                    class="text-xs text-gray-500 hidden md:block">{{ $endpoint['desc'] }}</span>
+                                            </div>
+                                        @endforeach
+                                        @if (count($project['endpoints']) > 4)
+                                            <div class="text-xs text-gray-500 font-mono pt-2">
+                                                + {{ count($project['endpoints']) - 4 }} autres endpoints
+                                                <a href="/projet/{{ $project['id'] }}"
+                                                    class="text-black dark:text-white hover:underline ml-2">Voir tout
+                                                    →</a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
-                </div>
+                @else
+                    <div
+                        class="border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0a0a0a] p-8 text-center">
+                        <p class="text-gray-500">Aucun projet disponible</p>
+                    </div>
+                @endif
 
                 <div
                     class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center text-sm text-gray-500">

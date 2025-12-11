@@ -2,20 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Routes pour les projets individuels
-Route::get('/projet/{id}', function ($id) {
-    if ($id < 1 || $id > 10) {
-        abort(404);
-    }
-    return view('projet', ['projectId' => $id]);
-})->where('id', '[1-9]|10');
-
-Route::get('/projet/{id}', function ($id) {
-    $projects = [
+// Fonction pour récupérer les données des projets
+function getProjectsData()
+{
+    return [
         1 => [
             'id' => 1,
             'name' => 'E-commerce',
@@ -252,6 +242,17 @@ Route::get('/projet/{id}', function ($id) {
             'tech' => ['REST API', 'HR Management', 'Leave Management', 'Employee Portal']
         ],
     ];
+}
+
+Route::get('/', function () {
+    $projects = getProjectsData();
+    return view('welcome', ['projects' => $projects]);
+});
+
+// Routes pour les projets individuels
+Route::get('/projet/{id}', function ($id) {
+    $id = (int) $id;
+    $projects = getProjectsData();
 
     if (!isset($projects[$id])) {
         abort(404);
