@@ -46,4 +46,30 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relations avec les groupes
+    public function groupe2User()
+    {
+        return $this->hasOne(Groupe2User::class);
+    }
+
+    public function groupe3User()
+    {
+        return $this->hasOne(Groupe3User::class);
+    }
+
+    public function groupe4Profil()
+    {
+        return $this->hasOne(Groupe4Profil::class);
+    }
+
+    public function groupe6User()
+    {
+        return $this->hasOne(Groupe6User::class);
+    }
+
+    public function groupe10Employe()
+    {
+        return $this->hasOne(Groupe10Employe::class);
+    }
 }
