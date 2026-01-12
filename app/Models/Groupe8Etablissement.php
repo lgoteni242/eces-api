@@ -23,5 +23,10 @@ class Groupe8Etablissement extends Model
     {
         return $this->hasMany(Groupe8Avis::class, 'etablissement_id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Groupe8Image::class, 'imageable');
+    }
 }
 

@@ -22,12 +22,26 @@ function getProjectsData()
                 'Système de notation et avis produits'
             ],
             'endpoints' => [
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-1/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-1/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-1/auth/logout', 'desc' => 'Se déconnecter'],
+                // Products (Public)
                 ['method' => 'GET', 'path' => '/api/groupe-1/products', 'desc' => 'Liste tous les produits'],
                 ['method' => 'GET', 'path' => '/api/groupe-1/products/{id}', 'desc' => 'Détails d\'un produit'],
-                ['method' => 'POST', 'path' => '/api/groupe-1/cart/add', 'desc' => 'Ajouter au panier'],
+                // Cart (Protected)
                 ['method' => 'GET', 'path' => '/api/groupe-1/cart', 'desc' => 'Récupérer le panier'],
-                ['method' => 'POST', 'path' => '/api/groupe-1/orders', 'desc' => 'Créer une commande'],
+                ['method' => 'POST', 'path' => '/api/groupe-1/cart', 'desc' => 'Ajouter au panier'],
+                ['method' => 'PUT', 'path' => '/api/groupe-1/cart/{id}', 'desc' => 'Modifier quantité panier'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-1/cart/{id}', 'desc' => 'Retirer du panier'],
+                // Orders (Protected)
                 ['method' => 'GET', 'path' => '/api/groupe-1/orders', 'desc' => 'Historique des commandes'],
+                ['method' => 'POST', 'path' => '/api/groupe-1/orders', 'desc' => 'Créer une commande'],
+                ['method' => 'GET', 'path' => '/api/groupe-1/orders/{id}', 'desc' => 'Détails d\'une commande'],
+                // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-1/admin/products', 'desc' => 'Créer un produit (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-1/admin/products/{id}', 'desc' => 'Modifier un produit (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-1/admin/products/{id}', 'desc' => 'Supprimer un produit (Admin)'],
             ],
             'tech' => ['REST API', 'JWT Auth', 'File Upload', 'Pagination']
         ],
@@ -47,11 +61,23 @@ function getProjectsData()
                 'Statistiques et rapports académiques'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-2/students', 'desc' => 'Liste des étudiants'],
-                ['method' => 'GET', 'path' => '/api/groupe-2/subjects', 'desc' => 'Liste des matières'],
-                ['method' => 'POST', 'path' => '/api/groupe-2/grades', 'desc' => 'Enregistrer une note'],
-                ['method' => 'GET', 'path' => '/api/groupe-2/grades/student/{id}', 'desc' => 'Notes d\'un étudiant'],
-                ['method' => 'GET', 'path' => '/api/groupe-2/reports/{studentId}', 'desc' => 'Bulletin de notes'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-2/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-2/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-2/auth/logout', 'desc' => 'Se déconnecter'],
+                // Matières
+                ['method' => 'GET', 'path' => '/api/groupe-2/matieres', 'desc' => 'Liste des matières'],
+                ['method' => 'POST', 'path' => '/api/groupe-2/matieres', 'desc' => 'Créer une matière'],
+                ['method' => 'GET', 'path' => '/api/groupe-2/matieres/{id}', 'desc' => 'Détails d\'une matière'],
+                ['method' => 'PUT', 'path' => '/api/groupe-2/matieres/{id}', 'desc' => 'Modifier une matière'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-2/matieres/{id}', 'desc' => 'Supprimer une matière'],
+                // Notes
+                ['method' => 'GET', 'path' => '/api/groupe-2/notes', 'desc' => 'Liste des notes'],
+                ['method' => 'POST', 'path' => '/api/groupe-2/notes', 'desc' => 'Enregistrer une note'],
+                ['method' => 'GET', 'path' => '/api/groupe-2/notes/{id}', 'desc' => 'Détails d\'une note'],
+                ['method' => 'PUT', 'path' => '/api/groupe-2/notes/{id}', 'desc' => 'Modifier une note'],
+                // Admin
+                ['method' => 'GET', 'path' => '/api/groupe-2/admin/dashboard', 'desc' => 'Tableau de bord admin'],
             ],
             'tech' => ['REST API', 'JWT Auth', 'PDF Generation', 'Data Aggregation']
         ],
@@ -64,18 +90,33 @@ function getProjectsData()
                 'Calendrier interactif de réservations',
                 'Gestion multi-salles et ressources',
                 'Détection automatique des conflits',
-                'Notifications par email',
+                'Gestion des prix par salle',
+                'Upload et affichage d\'images des salles',
                 'Historique des réservations',
-                'Statistiques d\'utilisation',
-                'Gestion des récurrences',
-                'Export calendrier (iCal)'
+                'Gestion admin complète (CRUD salles)',
+                'Suppression admin des réservations'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-3/rooms', 'desc' => 'Liste des salles'],
-                ['method' => 'POST', 'path' => '/api/groupe-3/bookings', 'desc' => 'Créer une réservation'],
-                ['method' => 'GET', 'path' => '/api/groupe-3/bookings', 'desc' => 'Liste des réservations'],
-                ['method' => 'GET', 'path' => '/api/groupe-3/calendar', 'desc' => 'Vue calendrier'],
-                ['method' => 'DELETE', 'path' => '/api/groupe-3/bookings/{id}', 'desc' => 'Annuler une réservation'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-3/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-3/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-3/auth/logout', 'desc' => 'Se déconnecter'],
+                // Salles (Public)
+                ['method' => 'GET', 'path' => '/api/groupe-3/salles', 'desc' => 'Liste des salles'],
+                ['method' => 'GET', 'path' => '/api/groupe-3/salles/{id}', 'desc' => 'Détails d\'une salle'],
+                ['method' => 'GET', 'path' => '/api/groupe-3/salles/{id}/images', 'desc' => 'Images d\'une salle'],
+                // Réservations (Protected)
+                ['method' => 'GET', 'path' => '/api/groupe-3/reservations', 'desc' => 'Mes réservations'],
+                ['method' => 'POST', 'path' => '/api/groupe-3/reservations', 'desc' => 'Créer une réservation'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-3/reservations/{id}', 'desc' => 'Annuler ma réservation'],
+                ['method' => 'GET', 'path' => '/api/groupe-3/reservations/calendrier', 'desc' => 'Vue calendrier'],
+                // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-3/admin/salles', 'desc' => 'Créer une salle (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-3/admin/salles/{id}', 'desc' => 'Modifier une salle (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-3/admin/salles/{id}', 'desc' => 'Supprimer une salle (Admin)'],
+                ['method' => 'POST', 'path' => '/api/groupe-3/admin/salles/{id}/images', 'desc' => 'Upload image salle (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-3/admin/images/{id}', 'desc' => 'Supprimer image (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-3/admin/reservations/{id}', 'desc' => 'Supprimer réservation (Admin)'],
             ],
             'tech' => ['REST API', 'Calendar Integration', 'Conflict Detection', 'Email Notifications']
         ],
@@ -88,18 +129,42 @@ function getProjectsData()
                 'Création et gestion de posts',
                 'Système de likes et réactions',
                 'Commentaires et réponses',
-                'Partage de publications',
-                'Système de followers/following',
+                'Système de chat en temps réel',
+                'Conversations et messages privés',
                 'Feed d\'actualités personnalisé',
                 'Gestion de profils utilisateurs',
-                'Upload de photos et médias'
+                'Upload de photos et médias',
+                'Compteur de messages non lus'
             ],
             'endpoints' => [
-                ['method' => 'POST', 'path' => '/api/groupe-4/posts', 'desc' => 'Créer un post'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-4/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-4/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-4/auth/logout', 'desc' => 'Se déconnecter'],
+                // Posts
                 ['method' => 'GET', 'path' => '/api/groupe-4/posts', 'desc' => 'Feed des posts'],
+                ['method' => 'POST', 'path' => '/api/groupe-4/posts', 'desc' => 'Créer un post'],
+                ['method' => 'GET', 'path' => '/api/groupe-4/posts/{id}', 'desc' => 'Détails d\'un post'],
+                ['method' => 'PUT', 'path' => '/api/groupe-4/posts/{id}', 'desc' => 'Modifier un post'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-4/posts/{id}', 'desc' => 'Supprimer un post'],
+                ['method' => 'GET', 'path' => '/api/groupe-4/feed', 'desc' => 'Feed personnalisé'],
+                // Likes
                 ['method' => 'POST', 'path' => '/api/groupe-4/posts/{id}/like', 'desc' => 'Liker un post'],
-                ['method' => 'POST', 'path' => '/api/groupe-4/posts/{id}/comments', 'desc' => 'Commenter'],
-                ['method' => 'POST', 'path' => '/api/groupe-4/users/{id}/follow', 'desc' => 'Suivre un utilisateur'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-4/posts/{id}/like', 'desc' => 'Retirer le like'],
+                // Comments
+                ['method' => 'GET', 'path' => '/api/groupe-4/posts/{id}/comments', 'desc' => 'Commentaires d\'un post'],
+                ['method' => 'POST', 'path' => '/api/groupe-4/posts/{id}/comments', 'desc' => 'Commenter un post'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-4/comments/{id}', 'desc' => 'Supprimer un commentaire'],
+                // Profil
+                ['method' => 'GET', 'path' => '/api/groupe-4/profil', 'desc' => 'Mon profil'],
+                ['method' => 'PUT', 'path' => '/api/groupe-4/profil', 'desc' => 'Modifier mon profil'],
+                // Chat
+                ['method' => 'POST', 'path' => '/api/groupe-4/chat/send', 'desc' => 'Envoyer un message'],
+                ['method' => 'GET', 'path' => '/api/groupe-4/chat/conversations', 'desc' => 'Liste des conversations'],
+                ['method' => 'GET', 'path' => '/api/groupe-4/chat/messages/{userId}', 'desc' => 'Messages avec un utilisateur'],
+                ['method' => 'POST', 'path' => '/api/groupe-4/chat/messages/{userId}/read', 'desc' => 'Marquer comme lus'],
+                ['method' => 'GET', 'path' => '/api/groupe-4/chat/unread-count', 'desc' => 'Nombre de messages non lus'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-4/chat/messages/{messageId}', 'desc' => 'Supprimer un message'],
             ],
             'tech' => ['REST API', 'Real-time Updates', 'Media Upload', 'Feed Algorithm']
         ],
@@ -119,10 +184,23 @@ function getProjectsData()
                 'Rapports de productivité'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-5/projects', 'desc' => 'Liste des projets'],
-                ['method' => 'POST', 'path' => '/api/groupe-5/tasks', 'desc' => 'Créer une tâche'],
-                ['method' => 'PUT', 'path' => '/api/groupe-5/tasks/{id}', 'desc' => 'Mettre à jour une tâche'],
-                ['method' => 'GET', 'path' => '/api/groupe-5/board/{projectId}', 'desc' => 'Vue Kanban'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-5/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-5/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-5/auth/logout', 'desc' => 'Se déconnecter'],
+                // Projets
+                ['method' => 'GET', 'path' => '/api/groupe-5/projets', 'desc' => 'Liste des projets'],
+                ['method' => 'POST', 'path' => '/api/groupe-5/projets', 'desc' => 'Créer un projet'],
+                ['method' => 'GET', 'path' => '/api/groupe-5/projets/{id}', 'desc' => 'Détails d\'un projet'],
+                ['method' => 'PUT', 'path' => '/api/groupe-5/projets/{id}', 'desc' => 'Modifier un projet'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-5/projets/{id}', 'desc' => 'Supprimer un projet'],
+                // Tâches
+                ['method' => 'GET', 'path' => '/api/groupe-5/projets/{projetId}/taches', 'desc' => 'Tâches d\'un projet'],
+                ['method' => 'POST', 'path' => '/api/groupe-5/projets/{projetId}/taches', 'desc' => 'Créer une tâche'],
+                ['method' => 'PUT', 'path' => '/api/groupe-5/taches/{id}', 'desc' => 'Modifier une tâche'],
+                ['method' => 'PUT', 'path' => '/api/groupe-5/taches/{id}/status', 'desc' => 'Changer le statut'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-5/taches/{id}', 'desc' => 'Supprimer une tâche'],
+                ['method' => 'POST', 'path' => '/api/groupe-5/taches/{id}/assign', 'desc' => 'Assigner une tâche'],
             ],
             'tech' => ['REST API', 'Kanban Board', 'Task Management', 'Team Collaboration']
         ],
@@ -142,10 +220,26 @@ function getProjectsData()
                 'Statistiques d\'apprentissage'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-6/courses', 'desc' => 'Liste des cours'],
-                ['method' => 'GET', 'path' => '/api/groupe-6/courses/{id}/lessons', 'desc' => 'Leçons d\'un cours'],
-                ['method' => 'POST', 'path' => '/api/groupe-6/enrollments', 'desc' => 'S\'inscrire à un cours'],
-                ['method' => 'GET', 'path' => '/api/groupe-6/progress', 'desc' => 'Progression de l\'étudiant'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-6/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-6/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-6/auth/logout', 'desc' => 'Se déconnecter'],
+                // Cours (Public)
+                ['method' => 'GET', 'path' => '/api/groupe-6/cours', 'desc' => 'Liste des cours'],
+                ['method' => 'GET', 'path' => '/api/groupe-6/cours/{id}', 'desc' => 'Détails d\'un cours'],
+                // Formateur
+                ['method' => 'POST', 'path' => '/api/groupe-6/formateur/cours', 'desc' => 'Créer un cours'],
+                ['method' => 'PUT', 'path' => '/api/groupe-6/formateur/cours/{id}', 'desc' => 'Modifier un cours'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-6/formateur/cours/{id}', 'desc' => 'Supprimer un cours'],
+                ['method' => 'GET', 'path' => '/api/groupe-6/formateur/cours/{coursId}/lecons', 'desc' => 'Leçons d\'un cours'],
+                ['method' => 'POST', 'path' => '/api/groupe-6/formateur/cours/{coursId}/lecons', 'desc' => 'Créer une leçon'],
+                ['method' => 'PUT', 'path' => '/api/groupe-6/formateur/cours/{coursId}/lecons/{id}', 'desc' => 'Modifier une leçon'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-6/formateur/cours/{coursId}/lecons/{id}', 'desc' => 'Supprimer une leçon'],
+                // Étudiant
+                ['method' => 'GET', 'path' => '/api/groupe-6/etudiant/cours/{id}/lecons', 'desc' => 'Leçons d\'un cours'],
+                ['method' => 'GET', 'path' => '/api/groupe-6/etudiant/cours/{coursId}/lecons/{id}', 'desc' => 'Détails d\'une leçon'],
+                ['method' => 'POST', 'path' => '/api/groupe-6/etudiant/progression', 'desc' => 'Enregistrer progression'],
+                ['method' => 'GET', 'path' => '/api/groupe-6/etudiant/progression', 'desc' => 'Ma progression'],
             ],
             'tech' => ['REST API', 'Video Streaming', 'Progress Tracking', 'Certificates']
         ],
@@ -165,10 +259,25 @@ function getProjectsData()
                 'Objectifs d\'épargne'
             ],
             'endpoints' => [
-                ['method' => 'POST', 'path' => '/api/groupe-7/transactions', 'desc' => 'Enregistrer une transaction'],
-                ['method' => 'GET', 'path' => '/api/groupe-7/transactions', 'desc' => 'Historique des transactions'],
-                ['method' => 'POST', 'path' => '/api/groupe-7/budgets', 'desc' => 'Créer un budget'],
-                ['method' => 'GET', 'path' => '/api/groupe-7/analytics', 'desc' => 'Statistiques et graphiques'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-7/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-7/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-7/auth/logout', 'desc' => 'Se déconnecter'],
+                // Transactions
+                ['method' => 'GET', 'path' => '/api/groupe-7/transactions', 'desc' => 'Liste des transactions'],
+                ['method' => 'POST', 'path' => '/api/groupe-7/transactions', 'desc' => 'Créer une transaction'],
+                ['method' => 'GET', 'path' => '/api/groupe-7/transactions/{id}', 'desc' => 'Détails d\'une transaction'],
+                ['method' => 'PUT', 'path' => '/api/groupe-7/transactions/{id}', 'desc' => 'Modifier une transaction'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-7/transactions/{id}', 'desc' => 'Supprimer une transaction'],
+                // Catégories
+                ['method' => 'GET', 'path' => '/api/groupe-7/categories', 'desc' => 'Liste des catégories'],
+                ['method' => 'POST', 'path' => '/api/groupe-7/categories', 'desc' => 'Créer une catégorie'],
+                ['method' => 'GET', 'path' => '/api/groupe-7/categories/{id}', 'desc' => 'Détails d\'une catégorie'],
+                ['method' => 'PUT', 'path' => '/api/groupe-7/categories/{id}', 'desc' => 'Modifier une catégorie'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-7/categories/{id}', 'desc' => 'Supprimer une catégorie'],
+                // Statistiques
+                ['method' => 'GET', 'path' => '/api/groupe-7/statistiques', 'desc' => 'Statistiques générales'],
+                ['method' => 'GET', 'path' => '/api/groupe-7/statistiques/by-categorie', 'desc' => 'Statistiques par catégorie'],
             ],
             'tech' => ['REST API', 'Data Visualization', 'Budget Analytics', 'Export Reports']
         ],
@@ -181,17 +290,36 @@ function getProjectsData()
                 'Base de données d\'établissements',
                 'Système de notation (1-5 étoiles)',
                 'Commentaires et avis détaillés',
-                'Upload de photos',
-                'Recherche et filtres',
-                'Recommandations personnalisées',
-                'Gestion de favoris',
-                'Statistiques d\'établissements'
+                'Upload d\'images pour établissements et avis',
+                'Gestion des rôles (Admin/User)',
+                'Système d\'authentification avec rôles',
+                'Suppression en cascade (établissements/avis/images)',
+                'Gestion admin complète des établissements'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-8/establishments', 'desc' => 'Liste des établissements'],
-                ['method' => 'POST', 'path' => '/api/groupe-8/reviews', 'desc' => 'Créer un avis'],
-                ['method' => 'GET', 'path' => '/api/groupe-8/reviews/{establishmentId}', 'desc' => 'Avis d\'un établissement'],
-                ['method' => 'POST', 'path' => '/api/groupe-8/favorites', 'desc' => 'Ajouter aux favoris'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-8/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-8/auth/login', 'desc' => 'Se connecter (retourne role)'],
+                ['method' => 'POST', 'path' => '/api/groupe-8/auth/logout', 'desc' => 'Se déconnecter'],
+                // Établissements (Public)
+                ['method' => 'GET', 'path' => '/api/groupe-8/etablissements', 'desc' => 'Liste des établissements'],
+                ['method' => 'GET', 'path' => '/api/groupe-8/etablissements/{id}', 'desc' => 'Détails d\'un établissement'],
+                ['method' => 'GET', 'path' => '/api/groupe-8/etablissements/{id}/avis', 'desc' => 'Avis d\'un établissement'],
+                // Avis (Protected)
+                ['method' => 'POST', 'path' => '/api/groupe-8/etablissements/{id}/avis', 'desc' => 'Créer un avis'],
+                ['method' => 'PUT', 'path' => '/api/groupe-8/avis/{id}', 'desc' => 'Modifier mon avis'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-8/avis/{id}', 'desc' => 'Supprimer mon avis'],
+                // Images
+                ['method' => 'POST', 'path' => '/api/groupe-8/etablissements/{id}/images', 'desc' => 'Upload image établissement'],
+                ['method' => 'GET', 'path' => '/api/groupe-8/etablissements/{id}/images', 'desc' => 'Images d\'un établissement'],
+                ['method' => 'POST', 'path' => '/api/groupe-8/avis/{id}/images', 'desc' => 'Upload image avis'],
+                ['method' => 'GET', 'path' => '/api/groupe-8/avis/{id}/images', 'desc' => 'Images d\'un avis'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-8/images/{id}', 'desc' => 'Supprimer une image'],
+                // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-8/admin/etablissements', 'desc' => 'Créer établissement (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-8/admin/etablissements/{id}', 'desc' => 'Modifier établissement (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-8/admin/etablissements/{id}', 'desc' => 'Supprimer établissement (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-8/admin/avis/{id}', 'desc' => 'Supprimer avis (Admin)'],
             ],
             'tech' => ['REST API', 'Rating System', 'Image Upload', 'Recommendation Engine']
         ],
@@ -211,10 +339,21 @@ function getProjectsData()
                 'Export de listes'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-9/events', 'desc' => 'Liste des événements'],
-                ['method' => 'POST', 'path' => '/api/groupe-9/events', 'desc' => 'Créer un événement'],
-                ['method' => 'POST', 'path' => '/api/groupe-9/registrations', 'desc' => 'S\'inscrire à un événement'],
-                ['method' => 'GET', 'path' => '/api/groupe-9/tickets/{userId}', 'desc' => 'Billets d\'un utilisateur'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-9/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-9/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-9/auth/logout', 'desc' => 'Se déconnecter'],
+                // Événements (Public)
+                ['method' => 'GET', 'path' => '/api/groupe-9/evenements', 'desc' => 'Liste des événements'],
+                ['method' => 'GET', 'path' => '/api/groupe-9/evenements/{id}', 'desc' => 'Détails d\'un événement'],
+                // Inscriptions (Protected)
+                ['method' => 'POST', 'path' => '/api/groupe-9/evenements/{id}/inscription', 'desc' => 'S\'inscrire à un événement'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-9/evenements/{id}/inscription', 'desc' => 'Annuler inscription'],
+                ['method' => 'GET', 'path' => '/api/groupe-9/mes-inscriptions', 'desc' => 'Mes inscriptions'],
+                // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-9/admin/evenements', 'desc' => 'Créer événement (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-9/admin/evenements/{id}', 'desc' => 'Modifier événement (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-9/admin/evenements/{id}', 'desc' => 'Supprimer événement (Admin)'],
             ],
             'tech' => ['REST API', 'QR Code Generation', 'Ticket Management', 'Event Analytics']
         ],
@@ -234,10 +373,29 @@ function getProjectsData()
                 'Statistiques RH'
             ],
             'endpoints' => [
-                ['method' => 'GET', 'path' => '/api/groupe-10/employees', 'desc' => 'Liste des employés'],
-                ['method' => 'POST', 'path' => '/api/groupe-10/leave-requests', 'desc' => 'Demander un congé'],
-                ['method' => 'GET', 'path' => '/api/groupe-10/attendance', 'desc' => 'Pointage et présences'],
-                ['method' => 'GET', 'path' => '/api/groupe-10/profile', 'desc' => 'Profil employé'],
+                // Auth
+                ['method' => 'POST', 'path' => '/api/groupe-10/auth/register', 'desc' => 'Créer un compte'],
+                ['method' => 'POST', 'path' => '/api/groupe-10/auth/login', 'desc' => 'Se connecter'],
+                ['method' => 'POST', 'path' => '/api/groupe-10/auth/logout', 'desc' => 'Se déconnecter'],
+                // Employés (Protected)
+                ['method' => 'GET', 'path' => '/api/groupe-10/employes', 'desc' => 'Liste des employés'],
+                ['method' => 'GET', 'path' => '/api/groupe-10/employes/{id}', 'desc' => 'Détails d\'un employé'],
+                ['method' => 'GET', 'path' => '/api/groupe-10/mon-profil', 'desc' => 'Mon profil employé'],
+                // Services
+                ['method' => 'GET', 'path' => '/api/groupe-10/services', 'desc' => 'Liste des services'],
+                ['method' => 'GET', 'path' => '/api/groupe-10/services/{id}', 'desc' => 'Détails d\'un service'],
+                // Congés
+                ['method' => 'GET', 'path' => '/api/groupe-10/conges', 'desc' => 'Liste des congés'],
+                ['method' => 'POST', 'path' => '/api/groupe-10/conges', 'desc' => 'Demander un congé'],
+                ['method' => 'GET', 'path' => '/api/groupe-10/conges/{id}', 'desc' => 'Détails d\'un congé'],
+                // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-10/admin/employes', 'desc' => 'Créer employé (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-10/admin/employes/{id}', 'desc' => 'Modifier employé (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-10/admin/employes/{id}', 'desc' => 'Supprimer employé (Admin)'],
+                ['method' => 'POST', 'path' => '/api/groupe-10/admin/services', 'desc' => 'Créer service (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-10/admin/services/{id}', 'desc' => 'Modifier service (Admin)'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-10/admin/services/{id}', 'desc' => 'Supprimer service (Admin)'],
+                ['method' => 'PUT', 'path' => '/api/groupe-10/admin/conges/{id}/status', 'desc' => 'Approuver/Refuser congé (Admin)'],
             ],
             'tech' => ['REST API', 'HR Management', 'Leave Management', 'Employee Portal']
         ],

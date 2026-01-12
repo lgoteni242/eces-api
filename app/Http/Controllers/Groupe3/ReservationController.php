@@ -84,5 +84,16 @@ class ReservationController extends Controller
 
         return response()->json(['message' => 'Réservation annulée'], 200);
     }
+
+    /**
+     * Supprimer une réservation (Admin uniquement)
+     */
+    public function destroy($id)
+    {
+        $reservation = Groupe3Reservation::findOrFail($id);
+        $reservation->delete();
+
+        return response()->json(['message' => 'Réservation supprimée'], 200);
+    }
 }
 

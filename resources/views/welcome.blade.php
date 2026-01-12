@@ -112,10 +112,10 @@
             <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800">
                 <div class="flex items-center gap-3">
                     <div
-                        class="w-8 h-8 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold font-mono text-sm">
-                        GI
+                        class="w-8 h-8 text-center bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold font-mono text-sm">
+                        GI 
                     </div>
-                    <span class="font-bold tracking-tight">ECES API</span>
+                    <span class="font-bold tracking-tight">ECES API {{  date('Y') }}</span>
                 </div>
             </div>
 

@@ -135,7 +135,7 @@
                             class="w-8 h-8 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold font-mono text-sm">
                             GI
                         </div>
-                        <span class="font-bold tracking-tight">ECES API</span>
+                        <span class="font-bold tracking-tight">ECES API {{  date('Y') }}</span>
                     </a>
                 </div>
             </div>

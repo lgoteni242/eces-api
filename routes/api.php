@@ -89,6 +89,9 @@ Route::prefix('groupe-3')->group(function () {
         Route::get('/salles', [App\Http\Controllers\Groupe3\SalleController::class, 'index']);
         Route::get('/salles/{id}', [App\Http\Controllers\Groupe3\SalleController::class, 'show']);
 
+        // Images des salles
+        Route::get('/salles/{id}/images', [App\Http\Controllers\Groupe3\ImageController::class, 'getSalleImages']);
+
         // Réservations
         Route::get('/reservations', [App\Http\Controllers\Groupe3\ReservationController::class, 'index']);
         Route::post('/reservations', [App\Http\Controllers\Groupe3\ReservationController::class, 'store']);
@@ -98,6 +101,9 @@ Route::prefix('groupe-3')->group(function () {
         // Admin routes
         Route::prefix('admin')->group(function () {
             Route::apiResource('salles', App\Http\Controllers\Groupe3\SalleController::class);
+            Route::post('/salles/{id}/images', [App\Http\Controllers\Groupe3\ImageController::class, 'uploadSalleImage']);
+            Route::delete('/images/{id}', [App\Http\Controllers\Groupe3\ImageController::class, 'deleteImage']);
+            Route::delete('/reservations/{id}', [App\Http\Controllers\Groupe3\ReservationController::class, 'destroy']);
         });
     });
 });
@@ -134,6 +140,14 @@ Route::prefix('groupe-4')->group(function () {
 
         // Feed
         Route::get('/feed', [App\Http\Controllers\Groupe4\PostController::class, 'feed']);
+
+        // Chat
+        Route::post('/chat/send', [App\Http\Controllers\Groupe4\ChatController::class, 'sendMessage']);
+        Route::get('/chat/conversations', [App\Http\Controllers\Groupe4\ChatController::class, 'getConversations']);
+        Route::get('/chat/messages/{userId}', [App\Http\Controllers\Groupe4\ChatController::class, 'getMessages']);
+        Route::post('/chat/messages/{userId}/read', [App\Http\Controllers\Groupe4\ChatController::class, 'markAsRead']);
+        Route::get('/chat/unread-count', [App\Http\Controllers\Groupe4\ChatController::class, 'getUnreadCount']);
+        Route::delete('/chat/messages/{messageId}', [App\Http\Controllers\Groupe4\ChatController::class, 'deleteMessage']);
     });
 });
 
@@ -235,9 +249,17 @@ Route::prefix('groupe-8')->group(function () {
         Route::put('/avis/{id}', [App\Http\Controllers\Groupe8\AvisController::class, 'update']);
         Route::delete('/avis/{id}', [App\Http\Controllers\Groupe8\AvisController::class, 'destroy']);
 
-        // Admin routes
-        Route::prefix('admin')->group(function () {
+        // Images
+        Route::post('/etablissements/{id}/images', [App\Http\Controllers\Groupe8\ImageController::class, 'uploadEtablissementImage']);
+        Route::get('/etablissements/{id}/images', [App\Http\Controllers\Groupe8\ImageController::class, 'getEtablissementImages']);
+        Route::post('/avis/{id}/images', [App\Http\Controllers\Groupe8\ImageController::class, 'uploadAvisImage']);
+        Route::get('/avis/{id}/images', [App\Http\Controllers\Groupe8\ImageController::class, 'getAvisImages']);
+        Route::delete('/images/{id}', [App\Http\Controllers\Groupe8\ImageController::class, 'deleteImage']);
+
+        // Admin routes (protégées par middleware IsAdmin)
+        Route::prefix('admin')->middleware('App\Http\Middleware\IsAdmin')->group(function () {
             Route::apiResource('etablissements', App\Http\Controllers\Groupe8\EtablissementController::class);
+            Route::delete('/avis/{id}', [App\Http\Controllers\Groupe8\AvisController::class, 'destroy']);
         });
     });
 });

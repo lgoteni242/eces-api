@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'groupe8_role',
     ];
 
     /**
@@ -61,6 +62,16 @@ class User extends Authenticatable
     public function groupe4Profil()
     {
         return $this->hasOne(Groupe4Profil::class);
+    }
+
+    public function groupe4MessagesSent()
+    {
+        return $this->hasMany(Groupe4Message::class, 'sender_id');
+    }
+
+    public function groupe4MessagesReceived()
+    {
+        return $this->hasMany(Groupe4Message::class, 'receiver_id');
     }
 
     public function groupe6User()

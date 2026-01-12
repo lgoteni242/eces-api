@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\ImageHelper;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,24 +20,28 @@ class Groupe3Seeder extends Seeder
             [
                 'nom' => 'Salle de réunion A',
                 'capacite' => 20,
+                'prix' => 50.00,
                 'equipements' => 'Projecteur, Tableau blanc, Wi-Fi',
                 'description' => 'Salle de réunion principale au 1er étage',
             ],
             [
                 'nom' => 'Salle de conférence B',
                 'capacite' => 50,
+                'prix' => 150.00,
                 'equipements' => 'Projecteur, Micro, Tableau interactif, Système audio',
                 'description' => 'Grande salle de conférence au rez-de-chaussée',
             ],
             [
                 'nom' => 'Salle de formation C',
                 'capacite' => 30,
+                'prix' => 100.00,
                 'equipements' => 'Projecteur, Tableau blanc, 30 postes informatiques',
                 'description' => 'Salle dédiée à la formation avec équipements informatiques',
             ],
             [
                 'nom' => 'Salle créative D',
                 'capacite' => 15,
+                'prix' => 40.00,
                 'equipements' => 'Tableau blanc, Wi-Fi, Espace collaboratif',
                 'description' => 'Petite salle pour brainstorming et réunions créatives',
             ],
@@ -46,6 +51,18 @@ class Groupe3Seeder extends Seeder
         foreach ($salles as $salle) {
             $s = \App\Models\Groupe3Salle::create($salle);
             $salleIds[] = $s->id;
+
+            // Ajouter 1-2 images par salle
+            $numImages = rand(1, 2);
+            for ($i = 0; $i < $numImages; $i++) {
+                $imageUrl = ImageHelper::establishment();
+                \App\Models\Groupe3Image::create([
+                    'url' => $imageUrl,
+                    'path' => 'groupe-3/salles/' . basename($imageUrl),
+                    'filename' => basename($imageUrl),
+                    'salle_id' => $s->id,
+                ]);
+            }
         }
 
         // Créer des utilisateurs

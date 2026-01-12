@@ -53,6 +53,14 @@ class Groupe8Seeder extends Seeder
             $etablissementIds[] = $e->id;
         }
 
+        // Créer un utilisateur admin
+        $admin = User::create([
+            'name' => 'Admin Groupe8',
+            'email' => 'admin@groupe8.com',
+            'password' => Hash::make('admin123'),
+            'groupe8_role' => 'admin',
+        ]);
+
         // Créer des utilisateurs pour les avis
         $users = [];
         for ($i = 1; $i <= 3; $i++) {
@@ -60,6 +68,7 @@ class Groupe8Seeder extends Seeder
                 'name' => "Avis User {$i}",
                 'email' => "avis{$i}@example.com",
                 'password' => Hash::make('password123'),
+                'groupe8_role' => 'user',
             ]);
             $users[] = $user;
         }
@@ -74,6 +83,7 @@ class Groupe8Seeder extends Seeder
             'Cuisine délicieuse, prix raisonnables',
         ];
 
+        $avisIds = [];
         foreach ($etablissementIds as $etablissementId) {
             // Créer 3-5 avis par établissement avec des utilisateurs différents
             $shuffledUsers = $users;
@@ -81,11 +91,43 @@ class Groupe8Seeder extends Seeder
             $avisCount = min(rand(3, 5), count($shuffledUsers));
 
             for ($i = 0; $i < $avisCount; $i++) {
-                \App\Models\Groupe8Avis::create([
+                $avis = \App\Models\Groupe8Avis::create([
                     'user_id' => $shuffledUsers[$i]->id,
                     'etablissement_id' => $etablissementId,
                     'note' => rand(3, 5), // Note entre 3 et 5
                     'commentaire' => $commentaires[array_rand($commentaires)],
+                ]);
+                $avisIds[] = $avis->id;
+            }
+        }
+
+        // Ajouter des images aux établissements
+        foreach ($etablissementIds as $etablissementId) {
+            // Ajouter 1-2 images par établissement
+            $numImages = rand(1, 2);
+            for ($i = 0; $i < $numImages; $i++) {
+                $imageUrl = ImageHelper::establishment();
+                \App\Models\Groupe8Image::create([
+                    'url' => $imageUrl,
+                    'path' => 'groupe-8/etablissements/' . basename($imageUrl),
+                    'filename' => basename($imageUrl),
+                    'imageable_type' => \App\Models\Groupe8Etablissement::class,
+                    'imageable_id' => $etablissementId,
+                ]);
+            }
+        }
+
+        // Ajouter des images aux avis (optionnel)
+        foreach ($avisIds as $avisId) {
+            // 30% de chance d'avoir une image
+            if (rand(1, 10) <= 3) {
+                $imageUrl = ImageHelper::post();
+                \App\Models\Groupe8Image::create([
+                    'url' => $imageUrl,
+                    'path' => 'groupe-8/avis/' . basename($imageUrl),
+                    'filename' => basename($imageUrl),
+                    'imageable_type' => \App\Models\Groupe8Avis::class,
+                    'imageable_id' => $avisId,
                 ]);
             }
         }

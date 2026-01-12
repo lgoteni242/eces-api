@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Groupe8;
 use App\Http\Controllers\Controller;
 use App\Models\Groupe8Etablissement;
 use Illuminate\Http\Request;
+use App\Models\Groupe8Image;
 
 class EtablissementController extends Controller
 {
@@ -27,7 +28,7 @@ class EtablissementController extends Controller
 
     public function show($id)
     {
-        $etablissement = Groupe8Etablissement::with(['avis.user'])
+        $etablissement = Groupe8Etablissement::with(['avis.user', 'images'])
             ->withAvg('avis', 'note')
             ->findOrFail($id);
 
@@ -69,9 +70,34 @@ class EtablissementController extends Controller
     public function destroy($id)
     {
         $etablissement = Groupe8Etablissement::findOrFail($id);
+
+        // Supprimer toutes les images associées
+        foreach ($etablissement->images as $image) {
+            // Supprimer le fichier du stockage
+            $storagePath = 'public/' . $image->path;
+            if (\Illuminate\Support\Facades\Storage::exists($storagePath)) {
+                \Illuminate\Support\Facades\Storage::delete($storagePath);
+            }
+            // Supprimer l'enregistrement
+            $image->delete();
+        }
+
+        // Supprimer tous les avis associés (cascade automatique via migration)
+        // Mais on supprime aussi les images des avis
+        foreach ($etablissement->avis as $avis) {
+            foreach ($avis->images as $image) {
+                $storagePath = 'public/' . $image->path;
+                if (\Illuminate\Support\Facades\Storage::exists($storagePath)) {
+                    \Illuminate\Support\Facades\Storage::delete($storagePath);
+                }
+                $image->delete();
+            }
+        }
+
+        // Supprimer l'établissement (les avis seront supprimés en cascade)
         $etablissement->delete();
 
-        return response()->json(['message' => 'Établissement supprimé'], 200);
+        return response()->json(['message' => 'Établissement et toutes les données associées supprimés'], 200);
     }
 }
 

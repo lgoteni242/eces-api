@@ -14,13 +14,23 @@ class Groupe3Salle extends Model
     protected $fillable = [
         'nom',
         'capacite',
+        'prix',
         'equipements',
         'description',
+    ];
+
+    protected $casts = [
+        'prix' => 'decimal:2',
     ];
 
     public function reservations()
     {
         return $this->hasMany(Groupe3Reservation::class, 'salle_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Groupe3Image::class, 'salle_id');
     }
 }
 
