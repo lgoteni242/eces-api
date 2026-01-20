@@ -201,6 +201,19 @@ function getProjectsData()
                 ['method' => 'PUT', 'path' => '/api/groupe-5/taches/{id}/status', 'desc' => 'Changer le statut'],
                 ['method' => 'DELETE', 'path' => '/api/groupe-5/taches/{id}', 'desc' => 'Supprimer une tâche'],
                 ['method' => 'POST', 'path' => '/api/groupe-5/taches/{id}/assign', 'desc' => 'Assigner une tâche'],
+                // Pièces jointes
+                ['method' => 'POST', 'path' => '/api/groupe-5/taches/{id}/pieces-jointes', 'desc' => 'Ajouter une pièce jointe'],
+                ['method' => 'GET', 'path' => '/api/groupe-5/taches/{id}/pieces-jointes', 'desc' => 'Liste des pièces jointes'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-5/taches/{id}/pieces-jointes/{pieceJointeId}', 'desc' => 'Supprimer une pièce jointe'],
+                // Commentaires
+                ['method' => 'POST', 'path' => '/api/groupe-5/taches/{id}/commentaires', 'desc' => 'Ajouter un commentaire'],
+                ['method' => 'GET', 'path' => '/api/groupe-5/taches/{id}/commentaires', 'desc' => 'Liste des commentaires'],
+                ['method' => 'PUT', 'path' => '/api/groupe-5/taches/{id}/commentaires/{commentaireId}', 'desc' => 'Modifier un commentaire'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-5/taches/{id}/commentaires/{commentaireId}', 'desc' => 'Supprimer un commentaire'],
+                // Labels
+                ['method' => 'POST', 'path' => '/api/groupe-5/taches/{id}/labels', 'desc' => 'Ajouter un label'],
+                ['method' => 'GET', 'path' => '/api/groupe-5/taches/{id}/labels', 'desc' => 'Liste des labels'],
+                ['method' => 'DELETE', 'path' => '/api/groupe-5/taches/{id}/labels/{labelId}', 'desc' => 'Supprimer un label'],
             ],
             'tech' => ['REST API', 'Kanban Board', 'Task Management', 'Team Collaboration']
         ],

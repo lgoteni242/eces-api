@@ -61,5 +61,11 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Déconnexion réussie']);
     }
+
+    public function getUsers()
+    {
+        // Retourne tous les utilisateurs pour pouvoir les inviter dans un projet
+        return response()->json(\App\Models\User::all());
+    }
 }
 

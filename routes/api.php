@@ -161,6 +161,9 @@ Route::prefix('groupe-5')->group(function () {
     Route::post('/auth/logout', [App\Http\Controllers\Groupe5\AuthController::class, 'logout'])->middleware('auth:sanctum');
 
     Route::middleware('auth:sanctum')->group(function () {
+        //Renvoie tous les utilisateurs ayant un compte
+        Route::get('/users', [App\Http\Controllers\Groupe5\AuthController::class, 'getUsers']);
+
         // Projets
         Route::apiResource('projets', App\Http\Controllers\Groupe5\ProjetController::class);
 
@@ -170,9 +173,26 @@ Route::prefix('groupe-5')->group(function () {
         Route::put('/taches/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'update']);
         Route::put('/taches/{id}/status', [App\Http\Controllers\Groupe5\TacheController::class, 'updateStatus']);
         Route::delete('/taches/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'destroy']);
+        Route::get('/taches/{id}/labels', [App\Http\Controllers\Groupe5\TacheController::class, 'getLabels']);
 
         // Attribution membres
         Route::post('/taches/{id}/assign', [App\Http\Controllers\Groupe5\TacheController::class, 'assign']);
+
+        // Pièces jointes
+        Route::post('/taches/{id}/pieces-jointes', [App\Http\Controllers\Groupe5\TacheController::class, 'uploadPieceJointe']);
+        Route::get('/taches/{id}/pieces-jointes', [App\Http\Controllers\Groupe5\TacheController::class, 'getPiecesJointes']);
+        Route::delete('/pieces-jointes/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'deletePieceJointe']);
+
+        // Gestion des commentaires
+        Route::post('/taches/{id}/commentaires', [App\Http\Controllers\Groupe5\TacheController::class, 'addCommentaire']);
+        Route::get('/taches/{id}/commentaires', [App\Http\Controllers\Groupe5\TacheController::class, 'getCommentaires']);
+        Route::put('/commentaires/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'updateCommentaire']);
+        Route::delete('/commentaires/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'deleteCommentaire']);
+
+        // Label
+        Route::get('/labels', [App\Http\Controllers\Groupe5\TacheController::class, 'getAllLabels']);
+        Route::post('/labels', [App\Http\Controllers\Groupe5\TacheController::class, 'storeLabel']);
+        Route::delete('/labels/{id}', [App\Http\Controllers\Groupe5\TacheController::class, 'removeLabel']);
     });
 });
 
