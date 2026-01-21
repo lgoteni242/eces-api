@@ -316,6 +316,7 @@ function getProjectsData()
                 ['method' => 'GET', 'path' => '/api/groupe-8/avis/{id}/images', 'desc' => 'Images d\'un avis'],
                 ['method' => 'DELETE', 'path' => '/api/groupe-8/images/{id}', 'desc' => 'Supprimer une image'],
                 // Admin
+                ['method' => 'POST', 'path' => '/api/groupe-8/admin/create-admin', 'desc' => 'Créer un administrateur (Admin)'],
                 ['method' => 'POST', 'path' => '/api/groupe-8/admin/etablissements', 'desc' => 'Créer établissement (Admin)'],
                 ['method' => 'PUT', 'path' => '/api/groupe-8/admin/etablissements/{id}', 'desc' => 'Modifier établissement (Admin)'],
                 ['method' => 'DELETE', 'path' => '/api/groupe-8/admin/etablissements/{id}', 'desc' => 'Supprimer établissement (Admin)'],

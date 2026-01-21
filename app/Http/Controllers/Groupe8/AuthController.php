@@ -16,28 +16,47 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'nullable|in:user,admin', // Seuls les admins existants peuvent créer d'autres admins
         ]);
 
-        // Par défaut, les nouveaux utilisateurs sont des 'user'
-        // Seuls les admins peuvent créer d'autres admins (vérification à faire côté frontend ou via middleware)
-        $role = $request->input('role', 'user');
-        
-        // Si l'utilisateur essaie de créer un admin, vérifier qu'il est lui-même admin
-        if ($role === 'admin' && (!$request->user() || $request->user()->groupe8_role !== 'admin')) {
-            $role = 'user'; // Forcer le rôle à 'user' si pas autorisé
-        }
-
+        // Les nouveaux utilisateurs sont toujours des 'user' par défaut
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'groupe8_role' => $role,
+            'groupe8_role' => 'user',
         ]);
 
         $token = $user->createToken('groupe8-token')->plainTextToken;
 
         return response()->json([
+            'user' => $user,
+            'token' => $token,
+            'role' => $user->groupe8_role,
+        ], 201);
+    }
+
+    /**
+     * Créer un administrateur (réservé aux admins existants)
+     */
+    public function createAdmin(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'groupe8_role' => 'admin',
+        ]);
+
+        $token = $user->createToken('groupe8-token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Administrateur créé avec succès',
             'user' => $user,
             'token' => $token,
             'role' => $user->groupe8_role,

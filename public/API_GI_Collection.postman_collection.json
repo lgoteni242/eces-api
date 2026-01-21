@@ -3657,6 +3657,40 @@
                     "name": "Admin",
                     "item": [
                         {
+                            "name": "Créer Administrateur",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json",
+                                        "type": "text"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin2@example.com\",\n    \"password\": \"admin123\",\n    \"password_confirmation\": \"admin123\"\n}"
+                                },
+                                "url": {
+                                    "raw": "{{base_url}}/api/groupe-8/admin/create-admin",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "groupe-8",
+                                        "admin",
+                                        "create-admin"
+                                    ]
+                                }
+                            }
+                        },
+                        {
                             "name": "Modifier Établissement (Admin)",
                             "request": {
                                 "method": "PUT",

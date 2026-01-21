@@ -282,6 +282,9 @@ Route::prefix('groupe-8')->group(function () {
 
         // Admin routes (protégées par middleware IsAdmin)
         Route::prefix('admin')->middleware('App\Http\Middleware\IsAdmin')->group(function () {
+            // Créer un administrateur
+            Route::post('/create-admin', [App\Http\Controllers\Groupe8\AuthController::class, 'createAdmin']);
+            // Gestion des établissements
             Route::apiResource('etablissements', App\Http\Controllers\Groupe8\EtablissementController::class);
             Route::delete('/avis/{id}', [App\Http\Controllers\Groupe8\AvisController::class, 'destroy']);
         });
