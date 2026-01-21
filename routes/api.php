@@ -67,6 +67,30 @@ Route::prefix('groupe-2')->group(function () {
         Route::get('/notes/{id}', [App\Http\Controllers\Groupe2\NoteController::class, 'show']);
         Route::put('/notes/{id}', [App\Http\Controllers\Groupe2\NoteController::class, 'update']);
 
+        // Étudiants
+        Route::apiResource('etudiants', App\Http\Controllers\Groupe2\EtudiantController::class);
+
+        // Enseignants
+        Route::apiResource('enseignants', App\Http\Controllers\Groupe2\EnseignantController::class);
+
+        // Classes
+        Route::apiResource('classes', App\Http\Controllers\Groupe2\ClasseController::class);
+
+        // Bulletins
+        Route::get('/bulletins/{etudiantId}', [App\Http\Controllers\Groupe2\BulletinController::class, 'show']);
+
+        // Emplois du temps
+        Route::get('/emplois-du-temps', [App\Http\Controllers\Groupe2\EmploiDuTempsController::class, 'index']);
+        Route::post('/emplois-du-temps', [App\Http\Controllers\Groupe2\EmploiDuTempsController::class, 'store']);
+        Route::get('/emplois-du-temps/{classeId}', [App\Http\Controllers\Groupe2\EmploiDuTempsController::class, 'show']);
+        Route::put('/emplois-du-temps/{id}', [App\Http\Controllers\Groupe2\EmploiDuTempsController::class, 'update']);
+        Route::delete('/emplois-du-temps/{id}', [App\Http\Controllers\Groupe2\EmploiDuTempsController::class, 'destroy']);
+
+        // Présences
+        Route::post('/presences', [App\Http\Controllers\Groupe2\PresenceController::class, 'store']);
+        Route::get('/presences/{etudiantId}', [App\Http\Controllers\Groupe2\PresenceController::class, 'getPresences']);
+        Route::get('/absences/{etudiantId}', [App\Http\Controllers\Groupe2\PresenceController::class, 'getAbsences']);
+
         // Dashboard Admin
         Route::prefix('admin')->group(function () {
             Route::get('/dashboard', [App\Http\Controllers\Groupe2\DashboardController::class, 'index']);

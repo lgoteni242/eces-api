@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full antialiased">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="API ECES - Documentation Technique">
     <title>ECES API | Documentation Technique</title>
 
@@ -38,7 +38,7 @@
         }
     </script>
 
-    <!-- Fonts -->
+        <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -48,7 +48,7 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
+            <style>
         /* Custom Scrollbar for a technical feel */
         ::-webkit-scrollbar {
             width: 6px;
@@ -97,8 +97,8 @@
             background-color: #1f2937;
             border-right: 2px solid #fff;
         }
-    </style>
-</head>
+            </style>
+    </head>
 
 <body
     class="h-full bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-gray-100 font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
@@ -210,7 +210,7 @@
                     <span
                         class="text-xs bg-black text-white dark:bg-white dark:text-black px-2 py-1 font-mono">DEV</span>
                 </div>
-            </header>
+        </header>
 
             <div class="p-8 max-w-6xl mx-auto">
 
@@ -432,9 +432,9 @@
                     <p>&copy; {{ date('Y') }} ECES API Ecosystem. All rights reserved.</p>
                     <p class="font-mono">SERVER_TIME: {{ now()->format('H:i:s UTC') }}</p>
                 </div>
-            </div>
-        </main>
-    </div>
+                </div>
+            </main>
+        </div>
 
     <script>
         // Toggle Dark Mode
@@ -457,6 +457,6 @@
             }
         });
     </script>
-</body>
+    </body>
 
 </html>

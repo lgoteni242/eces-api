@@ -25,5 +25,21 @@ class Groupe2User extends Model
     {
         return $this->hasMany(Groupe2Note::class, 'etudiant_id');
     }
+
+    public function classes()
+    {
+        return $this->belongsToMany(Groupe2Classe::class, 'groupe2_classe_etudiant', 'etudiant_id', 'classe_id')
+                    ->withTimestamps();
+    }
+
+    public function presences()
+    {
+        return $this->hasMany(Groupe2Presence::class, 'etudiant_id');
+    }
+
+    public function emploisDuTemps()
+    {
+        return $this->hasMany(Groupe2EmploiDuTemps::class, 'professeur_id');
+    }
 }
 
