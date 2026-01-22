@@ -281,7 +281,7 @@ Route::prefix('groupe-8')->group(function () {
         Route::delete('/images/{id}', [App\Http\Controllers\Groupe8\ImageController::class, 'deleteImage']);
 
         // Admin routes (protégées par middleware IsAdmin)
-        Route::prefix('admin')->middleware('App\Http\Middleware\IsAdmin')->group(function () {
+        Route::prefix('admin')->middleware('is.admin')->group(function () {
             // Créer un administrateur
             Route::post('/create-admin', [App\Http\Controllers\Groupe8\AuthController::class, 'createAdmin']);
             // Gestion des établissements
