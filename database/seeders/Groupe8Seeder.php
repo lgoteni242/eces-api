@@ -49,27 +49,36 @@ class Groupe8Seeder extends Seeder
 
         $etablissementIds = [];
         foreach ($etablissements as $etablissement) {
-            $e = \App\Models\Groupe8Etablissement::create($etablissement);
+            $e = \App\Models\Groupe8Etablissement::firstOrCreate(
+                ['nom' => $etablissement['nom']],
+                $etablissement
+            );
             $etablissementIds[] = $e->id;
         }
 
         // Créer un utilisateur admin
-        $admin = User::create([
-            'name' => 'Admin Groupe8',
-            'email' => 'admin@groupe8.com',
-            'password' => Hash::make('admin123'),
-            'groupe8_role' => 'admin',
-        ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@groupe8.com'],
+            [
+                'name' => 'Admin Groupe8',
+                'email' => 'admin@groupe8.com',
+                'password' => Hash::make('admin123'),
+                'groupe8_role' => 'admin',
+            ]
+        );
 
         // Créer des utilisateurs pour les avis
         $users = [];
         for ($i = 1; $i <= 3; $i++) {
-            $user = User::create([
-                'name' => "Avis User {$i}",
-                'email' => "avis{$i}@example.com",
-                'password' => Hash::make('password123'),
-                'groupe8_role' => 'user',
-            ]);
+            $user = User::firstOrCreate(
+                ['email' => "avis{$i}@example.com"],
+                [
+                    'name' => "Avis User {$i}",
+                    'email' => "avis{$i}@example.com",
+                    'password' => Hash::make('password123'),
+                    'groupe8_role' => 'user',
+                ]
+            );
             $users[] = $user;
         }
 
@@ -91,13 +100,20 @@ class Groupe8Seeder extends Seeder
             $avisCount = min(rand(3, 5), count($shuffledUsers));
 
             for ($i = 0; $i < $avisCount; $i++) {
-                $avis = \App\Models\Groupe8Avis::create([
-                    'user_id' => $shuffledUsers[$i]->id,
-                    'etablissement_id' => $etablissementId,
-                    'note' => rand(3, 5), // Note entre 3 et 5
-                    'commentaire' => $commentaires[array_rand($commentaires)],
-                ]);
-                $avisIds[] = $avis->id;
+                // Vérifier si l'avis existe déjà (un utilisateur ne peut avoir qu'un avis par établissement)
+                $avis = \App\Models\Groupe8Avis::firstOrCreate(
+                    [
+                        'user_id' => $shuffledUsers[$i]->id,
+                        'etablissement_id' => $etablissementId,
+                    ],
+                    [
+                        'note' => rand(3, 5), // Note entre 3 et 5
+                        'commentaire' => $commentaires[array_rand($commentaires)],
+                    ]
+                );
+                if (!in_array($avis->id, $avisIds)) {
+                    $avisIds[] = $avis->id;
+                }
             }
         }
 
